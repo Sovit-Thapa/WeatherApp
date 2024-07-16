@@ -11,19 +11,18 @@ class CityDetailsViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
 
-    var allWeatherDetails: [[String]] = []
+    var allWeatherDetails: [(details: [String], imageName: String)] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("recieved data: \(allWeatherDetails)")
-        tableView.dataSource = self
-        tableView.reloadData()
+        setupTableView()
     }
 
     func setupTableView() {
+        tableView.dataSource = self
         tableView.backgroundColor = UIColor.clear
         tableView.separatorStyle = .none
-        tableView.register(UITableView.self, forCellReuseIdentifier: "DetailCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DetailCell")
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -32,8 +31,15 @@ class CityDetailsViewController: UIViewController, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath)
+
         let weatherDetail = allWeatherDetails[indexPath.row]
-        cell.textLabel?.text = weatherDetail.joined(separator: "\n")
+        cell.textLabel?.text = weatherDetail.details.joined(separator: "\n")
+
+        // Set weather image
+        if let image = UIImage(systemName: weatherDetail.imageName)?.withRenderingMode(.alwaysTemplate) {
+            cell.imageView?.image = image
+            cell.imageView?.tintColor = .yellow // Customize tint color as needed
+        }
 
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.textColor = UIColor.black
@@ -44,3 +50,5 @@ class CityDetailsViewController: UIViewController, UITableViewDataSource {
         return cell
     }
 }
+
+

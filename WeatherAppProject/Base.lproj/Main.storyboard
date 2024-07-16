@@ -27,25 +27,6 @@
                                     <constraint firstAttribute="width" constant="30" id="lOX-HI-YSW"/>
                                 </constraints>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IAP-J5-N54" customClass="Weather">
-                                <rect key="frame" x="30" y="296.66666666666674" width="333" height="387.33333333333326"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <imageView key="tableFooterView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="1ku-uI-cZN">
-                                    <rect key="frame" x="0.0" y="234" width="333" height="120"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </imageView>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherDetailCell" rowHeight="156" id="T0s-rt-1gJ">
-                                        <rect key="frame" x="0.0" y="50" width="333" height="156"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T0s-rt-1gJ" id="BrD-pU-W8P">
-                                            <rect key="frame" x="0.0" y="0.0" width="333" height="156"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="location.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Nbv-fK-4Nb">
                                 <rect key="frame" x="40" y="106" width="30" height="28.666666666666657"/>
                                 <constraints>
@@ -82,12 +63,32 @@
                                     <action selector="temperatureUnitChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ChX-wz-C86"/>
                                 </connections>
                             </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IAP-J5-N54" customClass="Weather">
+                                <rect key="frame" x="30" y="296.66666666666674" width="333" height="505.33333333333326"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <imageView key="tableFooterView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="1ku-uI-cZN">
+                                    <rect key="frame" x="0.0" y="234" width="333" height="151"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherDetailCell" rowHeight="156" id="T0s-rt-1gJ">
+                                        <rect key="frame" x="0.0" y="50" width="333" height="156"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T0s-rt-1gJ" id="BrD-pU-W8P">
+                                            <rect key="frame" x="0.0" y="0.0" width="333" height="156"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="IAP-J5-N54" firstAttribute="top" secondItem="gBX-t8-CHx" secondAttribute="bottom" constant="159" id="7vS-Ng-RlU"/>
                             <constraint firstItem="bil-b1-xuE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Brm-wT-lwW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IAP-J5-N54" secondAttribute="bottom" constant="16" id="CeU-Ng-wnA"/>
                             <constraint firstItem="bil-b1-xuE" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="IV7-Ag-wTs"/>
                             <constraint firstItem="Nbv-fK-4Nb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="2" id="Je9-Pu-0zG"/>
                             <constraint firstItem="wQP-oP-Uzz" firstAttribute="top" secondItem="Nbv-fK-4Nb" secondAttribute="bottom" constant="8" id="McO-2e-edw"/>
@@ -105,7 +106,6 @@
                             <constraint firstItem="wQP-oP-Uzz" firstAttribute="leading" secondItem="IAP-J5-N54" secondAttribute="leading" id="twx-Ul-LCY"/>
                             <constraint firstItem="rbp-IF-ZAf" firstAttribute="trailing" secondItem="dKK-Wu-uAn" secondAttribute="trailing" id="vL8-gD-KBA"/>
                             <constraint firstItem="IAP-J5-N54" firstAttribute="top" secondItem="h81-1s-qhH" secondAttribute="bottom" constant="57" id="vhn-za-dst"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IAP-J5-N54" secondAttribute="bottom" constant="134" id="yte-tn-WBa"/>
                             <constraint firstItem="gBX-t8-CHx" firstAttribute="leading" secondItem="Nbv-fK-4Nb" secondAttribute="trailing" constant="25" id="ywc-mN-gOt"/>
                             <constraint firstItem="gBX-t8-CHx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zsk-tO-weZ"/>
                         </constraints>
@@ -148,10 +148,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Qkh-tZ-6WL">
-                                                    <rect key="frame" x="330" y="14.999999999999996" width="45" height="45.666666666666657"/>
+                                                    <rect key="frame" x="305" y="15" width="70" height="70.666666666666671"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="45" id="UuJ-an-Ybv"/>
-                                                        <constraint firstAttribute="height" constant="45" id="nSu-rQ-aSh"/>
+                                                        <constraint firstAttribute="width" constant="70" id="UuJ-an-Ybv"/>
+                                                        <constraint firstAttribute="height" constant="70" id="nSu-rQ-aSh"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
