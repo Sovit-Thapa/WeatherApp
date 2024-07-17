@@ -15,8 +15,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
 
     let weatherService = WeatherService()
     let locationManager = CLLocationManager()
-    var weatherDetails: [(details: [String], imageName: String)] = [] // Store only recent weather data
-    var allWeatherDetails: [(details: [String], imageName: String)] = [] // Store all searched weather data
+    var weatherDetails: [(details: [String], imageName: String)] = []
+    var allWeatherDetails: [(details: [String], imageName: String)] = []
     var currentWeather: Weather?
     var isFahrenheit: Bool {
         get {
@@ -50,7 +50,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
 
         setGradientBackground()
 
-        // Set initial segmented control state based on UserDefaults
         temperatureSegmentedControl.selectedSegmentIndex = isFahrenheit ? 1 : 0
     }
 
@@ -60,14 +59,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
             return
         }
 
-        // Clear previous recent weather details
         weatherDetails.removeAll()
         dataView.reloadData()
 
-        // Fetch new weather data
         fetchWeather(for: searchText)
     }
-
 
     @objc func getCurrentLocation() {
         locationManager.startUpdatingLocation()
@@ -87,26 +83,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
             }
             self?.currentWeather = weather
 
-            // Determine weather image name
             let weatherImageName = self?.getWeatherImageName(fromCode: weather.current.condition.code) ?? "cloud"
-            
-            // Determine temperature unit
+
             let temperature = self?.isFahrenheit ?? false ? weather.current.temp_f : weather.current.temp_c
             let temperatureUnit = self?.isFahrenheit ?? false ? "°F" : "°C"
-            
+
             let weatherDetail = [
                 "Location: \(weather.location.name)",
                 "Temperature: \(temperature)\(temperatureUnit)",
                 "Description: \(weather.current.condition.text)",
             ]
 
-            // Store the recent weather data
             self?.weatherDetails.append((
                 details: weatherDetail,
                 imageName: weatherImageName
             ))
 
-            // Store the data in all weather details
             self?.allWeatherDetails.append((
                 details: weatherDetail,
                 imageName: weatherImageName
@@ -117,7 +109,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
             }
         }
     }
-
 
     func refreshWeatherUI() {
         guard let weather = currentWeather else { return }
@@ -147,11 +138,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
             self.dataView.reloadData()
             self.animateTableView()
 
-            // Set weather image at the bottom
             let imageName = self.getWeatherImageName(fromCode: weather.current.condition.code)
             if let image = UIImage(systemName: imageName)?.withRenderingMode(.alwaysTemplate) {
                 self.weatherImage.image = image
-                self.weatherImage.tintColor = .yellow // Set tint color to yellow
+                self.weatherImage.tintColor = .yellow
             }
 
             self.updateBackgroundImage(for: weather)
@@ -177,22 +167,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
 
     func getWeatherImageName(fromCode code: Int) -> String {
         switch code {
-        case 1000: return "sun.max" // Sunny
-        case 1003, 1006: return "cloud.sun" // Partly Cloudy / Cloudy
-        case 1183, 1186, 1189: return "cloud.rain" // Rainy
-        case 1030: return "cloud.fog" // Mist
-        case 1063, 1066, 1069, 1072: return "cloud.drizzle" // Patchy rain/snow/drizzle
-        case 1087: return "cloud.bolt" // Thundery outbreaks possible
-        case 1114, 1117: return "snow" // Blowing snow / Blizzard
-        case 1135, 1147: return "cloud.fog" // Fog / Freezing fog
-        case 1150, 1153, 1168, 1171, 1180, 1192, 1195: return "cloud.drizzle" // Various types of rain/drizzle
-        case 1198, 1201, 1204, 1207: return "cloud.sleet" // Freezing rain/sleet
-        case 1210, 1213, 1216, 1219, 1222, 1225: return "cloud.snow" // Various types of snow
-        case 1237: return "cloud.hail" // Ice pellets
-        case 1240, 1243, 1246, 1249, 1252, 1255, 1258, 1261, 1264: return "cloud.sun.rain" // Various types of showers
-        case 1273, 1276: return "cloud.bolt.rain" // Rain with thunder
-        case 1279, 1282: return "cloud.bolt.snow" // Snow with thunder
-        default: return "cloud" // Default fallback
+        case 1000: return "sun.max"
+        case 1003, 1006: return "cloud.sun"
+        case 1183, 1186, 1189: return "cloud.rain"
+        case 1030: return "cloud.fog"
+        case 1063, 1066, 1069, 1072: return "cloud.drizzle"
+        case 1087: return "cloud.bolt"
+        case 1114, 1117: return "snow"
+        case 1135, 1147: return "cloud.fog"
+        case 1150, 1153, 1168, 1171, 1180, 1192, 1195: return "cloud.drizzle"
+        case 1198, 1201, 1204, 1207: return "cloud.sleet"
+        case 1210, 1213, 1216, 1219, 1222, 1225: return "cloud.snow"
+        case 1237: return "cloud.hail"
+        case 1240, 1243, 1246, 1249, 1252, 1255, 1258, 1261, 1264: return "cloud.sun.rain"
+        case 1273, 1276: return "cloud.bolt.rain"
+        case 1279, 1282: return "cloud.bolt.snow"
+        default: return "cloud"
         }
     }
 
@@ -221,37 +211,29 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherDetailCell", for: indexPath)
 
         let weatherDetail = weatherDetails[indexPath.row]
-        
-        // Prepare the text to display in the cell
+
         let locationText = "Location: \(weatherDetail.details[0].trimmingCharacters(in: .whitespacesAndNewlines))"
         let temperatureText = "Temperature: \(weatherDetail.details[1].trimmingCharacters(in: .whitespacesAndNewlines))"
         let descriptionText = "Description: \(weatherDetail.details[2].trimmingCharacters(in: .whitespacesAndNewlines))"
-        
-        // Combine all details into one multiline string
+
         let combinedText = """
             \(locationText)
             \(temperatureText)
             \(descriptionText)
         """
 
-        // Configure the cell
         cell.textLabel?.text = combinedText
         cell.backgroundColor = UIColor.clear
         cell.textLabel?.textColor = UIColor.black
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         cell.textLabel?.shadowColor = UIColor.gray.withAlphaComponent(0.5)
         cell.textLabel?.shadowOffset = CGSize(width: 1, height: 1)
-        cell.textLabel?.numberOfLines = 0 // Allow multiline display
-        cell.textLabel?.textAlignment = .left // Ensure text starts from the beginning
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.textAlignment = .left
         cell.textLabel?.lineBreakMode = .byWordWrapping
 
         return cell
     }
-
-
-
-
-
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
@@ -298,46 +280,38 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowWeatherDetail" {
             if let weatherHistoryVC = segue.destination as? CityDetailsViewController {
-                // Determine the unit based on current user preference
                 let isCurrentFahrenheit = UserDefaults.standard.bool(forKey: "isFahrenheit")
-                
-                // Adjust temperatures in allWeatherDetails based on the current preference
+
                 var adjustedDetails: [(details: [String], imageName: String)] = []
                 for weatherDetail in self.allWeatherDetails {
-                    var adjustedTemperature = weatherDetail.details[1] // Temperature detail
-                    
-                    // Convert temperature to Fahrenheit if needed
+                    var adjustedTemperature = weatherDetail.details[1]
+
                     if isCurrentFahrenheit {
                         if let celsius = Double(weatherDetail.details[1].replacingOccurrences(of: "°C", with: "")) {
                             let fahrenheit = (celsius * 9/5) + 32
                             adjustedTemperature = String(format: "%.1f", fahrenheit) + "°F"
                         }
                     }
-                    
-                    // Update the weather detail with adjusted temperature
+
                     let adjustedDetail = [
-                        weatherDetail.details[0], // Location
-                        adjustedTemperature, // Adjusted temperature
-                        weatherDetail.details[2] // Description
+                        weatherDetail.details[0],
+                        adjustedTemperature,
+                        weatherDetail.details[2]
                     ]
-                    
+
                     adjustedDetails.append((
                         details: adjustedDetail,
                         imageName: weatherDetail.imageName
                     ))
                 }
-                
-                // Pass adjusted weather details to CityDetailsViewController
+
                 weatherHistoryVC.allWeatherDetails = adjustedDetails
             }
         }
     }
 
-
-
-    // Handle segmented control value changed
     @IBAction func temperatureUnitChanged(_ sender: UISegmentedControl) {
-        isFahrenheit = sender.selectedSegmentIndex == 1 // 1 for Fahrenheit, 0 for Celsius
+        isFahrenheit = sender.selectedSegmentIndex == 1
         UserDefaults.standard.set(isFahrenheit, forKey: "isFahrenheit")
 
         if let weather = currentWeather {

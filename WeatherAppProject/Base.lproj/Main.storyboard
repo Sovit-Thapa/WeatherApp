@@ -61,6 +61,9 @@
                                 <rect key="frame" x="95" y="103" width="203" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="UQV-EW-TLT"/>
+                                </connections>
                             </textField>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="h81-1s-qhH">
                                 <rect key="frame" x="290" y="213" width="57" height="32"/>
@@ -174,6 +177,7 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
+                                    <outlet property="dataSource" destination="khw-dR-RfF" id="WMN-WM-Gru"/>
                                     <outlet property="delegate" destination="khw-dR-RfF" id="9vT-DB-tYk"/>
                                 </connections>
                             </tableView>
