@@ -15,8 +15,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
 
     let weatherService = WeatherService()
     let locationManager = CLLocationManager()
-    var weatherDetails: [(details: [String], imageName: String)] = []
-    var allWeatherDetails: [[Any]] = [] // Updated to store any type
+    var weatherDetails: [(details: [String], imageName: String)] = [] // Store only recent weather data
+    var allWeatherDetails: [(details: [String], imageName: String)] = [] // Store all searched weather data
     var currentWeather: Weather?
     var isFahrenheit: Bool {
         get {
@@ -55,19 +55,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
     }
 
     @objc func searchWeather() {
-            guard let searchText = searchTextField.text, !searchText.isEmpty else {
-                showAlert(title: "Input Required", message: "Please enter a location.")
-                return
-            }
-
-            // Clear previous weather details
-            allWeatherDetails.removeAll()
-            dataView.reloadData()
-
-            // Fetch new weather data
-            fetchWeather(for: searchText)
+        guard let searchText = searchTextField.text, !searchText.isEmpty else {
+            showAlert(title: "Input Required", message: "Please enter a location.")
+            return
         }
 
+        // Clear previous recent weather details
+        weatherDetails.removeAll()
+        dataView.reloadData()
+
+        // Fetch new weather data
+        fetchWeather(for: searchText)
+    }
 
     @objc func getCurrentLocation() {
         locationManager.startUpdatingLocation()
@@ -80,28 +79,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
     }
 
     func fetchWeather(for city: String) {
-            weatherService.fetchWeather(city: city) { [weak self] weather in
-                guard let weather = weather else {
-                    print("Failed to fetch weather data")
-                    return
-                }
-                self?.currentWeather = weather
+        weatherService.fetchWeather(city: city) { [weak self] weather in
+            guard let weather = weather else {
+                print("Failed to fetch weather data")
+                return
+            }
+            self?.currentWeather = weather
 
-                // Determine weather image name
-                let weatherImageName = self?.getWeatherImageName(fromCode: weather.current.condition.code) ?? "cloud"
-                self?.allWeatherDetails.append([
-                    "Location: \(weather.location.name)",
-                    "Temperature: \(weather.current.temp_c)°C",
-                    "Description: \(weather.current.condition.text)",
-                    weather.current.condition.code, // Store code as Int
-                    weatherImageName // Add weather image name
-                ])
+            // Determine weather image name
+            let weatherImageName = self?.getWeatherImageName(fromCode: weather.current.condition.code) ?? "cloud"
+            let weatherDetail = [
+                "Location: \(weather.location.name)",
+                "Temperature: \(weather.current.temp_c)°C",
+                "Description: \(weather.current.condition.text)",
+         
+            ]
 
-                DispatchQueue.main.async {
-                    self?.refreshWeatherUI()
-                }
+            // Store the recent weather data
+            self?.weatherDetails.append((
+                details: weatherDetail,
+                imageName: weatherImageName
+            ))
+
+            // Store the data in all weather details
+            self?.allWeatherDetails.append((
+                details: weatherDetail,
+                imageName: weatherImageName
+            ))
+
+            DispatchQueue.main.async {
+                self?.refreshWeatherUI()
             }
         }
+    }
 
     func refreshWeatherUI() {
         guard let weather = currentWeather else { return }
@@ -115,17 +125,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
         weatherDetails = [
             (
                 details: [
-                    "Location: \(weather.location.name), \(weather.location.region), \(weather.location.country)",
-                    "Temperature: \(temperature)\(temperatureUnit)",
-                    "Description: \(weather.current.condition.text)",
-                    "Wind Speed: \(weather.current.wind_kph) kph (\(weather.current.wind_mph) mph)",
-                    "Humidity: \(weather.current.humidity)%"
+                    "\(weather.location.name), \(weather.location.region), \(weather.location.country)",
+                    "\(temperature)\(temperatureUnit)",
+                    "\(weather.current.condition.text)",
+                    "\(weather.current.wind_kph) kph (\(weather.current.wind_mph) mph)",
+                    "\(weather.current.humidity)%"
                 ],
                 imageName: getWeatherImageName(fromCode: weather.current.condition.code)
             )
         ]
 
-        weatherInfo.text = " \(weather.current.condition.text)"
+        weatherInfo.text = "\(weather.current.condition.text)"
 
         DispatchQueue.main.async {
             self.dataView.reloadData()
@@ -135,7 +145,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
             let imageName = self.getWeatherImageName(fromCode: weather.current.condition.code)
             if let image = UIImage(systemName: imageName)?.withRenderingMode(.alwaysTemplate) {
                 self.weatherImage.image = image
-                self.weatherImage.tintColor = .yellow // Set tint color to white
+                self.weatherImage.tintColor = .yellow // Set tint color to yellow
             }
 
             self.updateBackgroundImage(for: weather)
@@ -198,17 +208,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allWeatherDetails.count
+        return weatherDetails.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherDetailCell", for: indexPath)
 
-        let weatherDetail = allWeatherDetails[indexPath.row]
+        let weatherDetail = weatherDetails[indexPath.row]
         cell.textLabel?.text = """
-            Location: \(weatherDetail[0])
-            Temperature: \(weatherDetail[1])
-            Description: \(weatherDetail[2])
+            Location: \(weatherDetail.details[0])
+            Temperature: \(weatherDetail.details[1])
+            Description: \(weatherDetail.details[2])
         """
 
         cell.backgroundColor = UIColor.clear
@@ -257,29 +267,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
 
     @IBAction func citiesButtonTapped(_ sender: UIButton) {
         if self.allWeatherDetails.isEmpty {
-            print("Data is not ready.")
+            showAlert(title: "No Data", message: "No weather data to show. Please perform a search first.")
         } else {
             performSegue(withIdentifier: "ShowWeatherDetail", sender: self)
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "ShowWeatherDetail" {
-                if let weatherHistoryVC = segue.destination as? CityDetailsViewController {
-                    // Convert self.allWeatherDetails of type [[Any]] to the expected type [(details: [String], imageName: String)]
-                    let formattedWeatherDetails: [(details: [String], imageName: String)] = self.allWeatherDetails.map { details in
-                        guard let location = details[0] as? String,
-                              let temperature = details[1] as? String,
-                              let description = details[2] as? String,
-                              let imageName = details[4] as? String else {
-                            return (details: ["", "", ""], imageName: "")
-                        }
-                        return (details: [location, temperature, description], imageName: imageName)
-                    }
-                    weatherHistoryVC.allWeatherDetails = formattedWeatherDetails
-                }
+        if segue.identifier == "ShowWeatherDetail" {
+            if let weatherHistoryVC = segue.destination as? CityDetailsViewController {
+                weatherHistoryVC.allWeatherDetails = self.allWeatherDetails
             }
         }
+    }
 
     // Handle segmented control value changed
     @IBAction func temperatureUnitChanged(_ sender: UISegmentedControl) {
@@ -290,5 +290,4 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
             updateUI(with: weather)
         }
     }
-
 }

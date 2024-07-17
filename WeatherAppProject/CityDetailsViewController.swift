@@ -34,21 +34,27 @@ class CityDetailsViewController: UIViewController, UITableViewDataSource {
 
         let weatherDetail = allWeatherDetails[indexPath.row]
         cell.textLabel?.text = weatherDetail.details.joined(separator: "\n")
-
-        // Set weather image
-        if let image = UIImage(systemName: weatherDetail.imageName)?.withRenderingMode(.alwaysTemplate) {
-            cell.imageView?.image = image
-            cell.imageView?.tintColor = .yellow // Customize tint color as needed
-        }
-
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.textColor = UIColor.black
         cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
-        cell.backgroundColor = UIColor.clear
+        cell.backgroundColor = UIColor(red: 115/255, green: 206/255, blue: 224/255, alpha: 1.0)  // Light blue color
         cell.selectionStyle = .none
+
+        // Set weather image with a custom size and yellow tint
+        if let image = UIImage(systemName: weatherDetail.imageName)?.withRenderingMode(.alwaysTemplate) {
+            let imageSize = CGSize(width: 60, height: 64)  // Adjust size as needed
+            UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
+            UIColor.yellow.setFill()
+            image.draw(in: CGRect(origin: .zero, size: imageSize))
+            let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            cell.imageView?.image = scaledImage
+            cell.imageView?.tintColor = .yellow  // Set the tint color here
+        }
 
         return cell
     }
-}
 
+}
 
