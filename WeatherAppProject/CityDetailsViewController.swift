@@ -16,6 +16,7 @@ class CityDetailsViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        self.title = "Cities"
     }
 
     func setupTableView() {
