@@ -223,9 +223,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
         let weatherDetail = weatherDetails[indexPath.row]
         
         // Prepare the text to display in the cell
-        let locationText = "Location: \(weatherDetail.details[0])"
-        let temperatureText = "Temperature: \(weatherDetail.details[1])"
-        let descriptionText = "Description: \(weatherDetail.details[2])"
+        let locationText = "Location: \(weatherDetail.details[0].trimmingCharacters(in: .whitespacesAndNewlines))"
+        let temperatureText = "Temperature: \(weatherDetail.details[1].trimmingCharacters(in: .whitespacesAndNewlines))"
+        let descriptionText = "Description: \(weatherDetail.details[2].trimmingCharacters(in: .whitespacesAndNewlines))"
         
         // Combine all details into one multiline string
         let combinedText = """
@@ -242,9 +242,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDa
         cell.textLabel?.shadowColor = UIColor.gray.withAlphaComponent(0.5)
         cell.textLabel?.shadowOffset = CGSize(width: 1, height: 1)
         cell.textLabel?.numberOfLines = 0 // Allow multiline display
+        cell.textLabel?.textAlignment = .left // Ensure text starts from the beginning
+        cell.textLabel?.lineBreakMode = .byWordWrapping
 
         return cell
     }
+
+
+
+
 
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

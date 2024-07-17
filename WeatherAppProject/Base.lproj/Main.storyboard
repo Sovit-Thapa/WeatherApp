@@ -34,27 +34,36 @@
                                     <constraint firstAttribute="height" constant="30" id="fpI-4N-IUj"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQP-oP-Uzz">
-                                <rect key="frame" x="30" y="143" width="67" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQP-oP-Uzz">
+                                <rect key="frame" x="30.000000000000007" y="143" width="82.666666666666686" height="42"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Cities"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Cities">
+                                            <attributes>
+                                                <font key="NSFont" size="25" name=".SFNS-Regular"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="khw-dR-RfF" kind="show" identifier="ShowWeatherDetail" id="Ykq-Nd-8LZ"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbp-IF-ZAf">
-                                <rect key="frame" x="280.33333333333331" y="149.66666666666666" width="72.666666666666686" height="22"/>
+                                <rect key="frame" x="280.33333333333331" y="153" width="72.666666666666686" height="22"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <color key="textColor" name="AccentColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleAspectFill" semanticContentAttribute="forceLeftToRight" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Location" adjustsFontSizeToFit="NO" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="gBX-t8-CHx">
-                                <rect key="frame" x="95" y="103" width="203" height="34.666666666666657"/>
+                                <rect key="frame" x="95" y="103" width="203" height="38"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="h81-1s-qhH">
-                                <rect key="frame" x="290" y="208.66666666666666" width="57" height="32"/>
+                                <rect key="frame" x="290" y="212" width="57" height="32"/>
                                 <segments>
                                     <segment title="C"/>
                                     <segment title="F"/>
@@ -64,7 +73,7 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IAP-J5-N54" customClass="Weather">
-                                <rect key="frame" x="30" y="296.66666666666674" width="333" height="505.33333333333326"/>
+                                <rect key="frame" x="30" y="300" width="333" height="502"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <imageView key="tableFooterView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="1ku-uI-cZN">
                                     <rect key="frame" x="0.0" y="234" width="333" height="151"/>
@@ -136,7 +145,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7Sg-u5-cOS">
-                                <rect key="frame" x="-7" y="22" width="395" height="830"/>
+                                <rect key="frame" x="0.0" y="31" width="395" height="830"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -148,7 +157,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Qkh-tZ-6WL">
-                                                    <rect key="frame" x="20" y="16" width="111" height="120"/>
+                                                    <rect key="frame" x="20" y="15.000000000000007" width="100" height="100.66666666666669"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="UuJ-an-Ybv"/>
                                                         <constraint firstAttribute="height" constant="100" id="nSu-rQ-aSh"/>
@@ -156,9 +165,8 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Qkh-tZ-6WL" firstAttribute="top" secondItem="NPQ-7t-Bik" secondAttribute="topMargin" constant="6" id="H0d-BY-74s"/>
-                                                <constraint firstItem="Qkh-tZ-6WL" firstAttribute="leading" secondItem="NPQ-7t-Bik" secondAttribute="leadingMargin" id="hun-gc-B1B"/>
-                                                <constraint firstItem="Qkh-tZ-6WL" firstAttribute="top" secondItem="NPQ-7t-Bik" secondAttribute="topMargin" constant="5" id="uaS-H5-PTS"/>
+                                                <constraint firstItem="Qkh-tZ-6WL" firstAttribute="top" secondItem="NPQ-7t-Bik" secondAttribute="topMargin" constant="5" id="6R5-pU-pFF"/>
+                                                <constraint firstItem="Qkh-tZ-6WL" firstAttribute="leading" secondItem="NPQ-7t-Bik" secondAttribute="leadingMargin" id="FHM-sE-cNu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
